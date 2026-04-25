@@ -28,8 +28,11 @@ services:
     image: redis:6-alpine
     container_name: eduvance_redis
     restart: unless-stopped
+    command: redis-server /usr/local/etc/redis/redis.conf
     ports:
       - "6379:6379"
+    volumes:
+      - ./docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
     networks:
       - eduvance_network
 
@@ -43,13 +46,8 @@ services:
       - "80:80"
     volumes:
       - ./:/var/www/html
-    environment:
-      - DB_HOST=mysql
-      - DB_PORT=3306
-      - DB_DATABASE=eduvance
-      - DB_USERNAME=eduvance_user
-      - DB_PASSWORD=eduvance_secret
-      - REDIS_HOST=redis
+    env_file:
+      - .env
     depends_on:
       mysql:
         condition: service_healthy

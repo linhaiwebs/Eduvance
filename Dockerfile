@@ -54,6 +54,9 @@ RUN chown -R www-data:www-data /var/www/html \
 # Copy custom PHP configuration
 COPY docker/php/custom.ini /usr/local/etc/php/conf.d/custom.ini
 
+# Fix PHP-FPM clear_env (allows Docker env vars to reach PHP)
+RUN echo "clear_env = no" >> /usr/local/etc/php-fpm.d/www.conf
+
 # Copy nginx configuration
 COPY docker/nginx/default.conf /etc/nginx/sites-available/default
 
