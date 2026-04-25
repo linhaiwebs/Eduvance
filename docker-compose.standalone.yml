@@ -1,0 +1,65 @@
+# Use this for single-container deployment (includes Nginx + PHP-FPM)
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: eduvance_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: eduvance
+      MYSQL_USER: eduvance_user
+      MYSQL_PASSWORD: eduvance_secret
+      MYSQL_ROOT_PASSWORD: root_secret
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+    networks:
+      - eduvance_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:6-alpine
+    container_name: eduvance_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - eduvance_network
+
+  eduvance:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: eduvance_app
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/var/www/html
+    environment:
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_DATABASE=eduvance
+      - DB_USERNAME=eduvance_user
+      - DB_PASSWORD=eduvance_secret
+      - REDIS_HOST=redis
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - eduvance_network
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  eduvance_network:
+    driver: bridge
