@@ -19,7 +19,7 @@
                     <div class="card-body">
                         <h2 class="text-center">AI ChatBot</h1>
                         <div class="text-center">
-                            <a href="" class="btn btn-primary mt-5">View System</a>
+                            <span class="btn btn-secondary mt-5 disabled">Coming Soon</span>
                         </div>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
                     <div class="card-body">
                         <h2 class="text-center">Course Recommendation</h1>
                         <div class="text-center">
-                            <a href="" class="btn btn-primary mt-5">View System</a>
+                            <span class="btn btn-secondary mt-5 disabled">Coming Soon</span>
                         </div>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                     <div class="card-body">
                         <h2 class="text-center">Teacher Performance Handler</h1>
                             <div class="text-center">
-                            <a href="" class="btn btn-primary mt-5">View System</a>
+                            <span class="btn btn-secondary mt-5 disabled">Coming Soon</span>
                             </div>
                     </div>
                 </div>

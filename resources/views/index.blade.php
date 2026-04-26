@@ -8,24 +8,23 @@
 
 
   <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700,900" rel="stylesheet">
-  <link rel="stylesheet" href="fonts/icomoon/style.css">
+  <link rel="stylesheet" href="{{ asset('fonts/icomoon/style.css') }}">
 
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/jquery-ui.css">
-  <link rel="stylesheet" href="css/owl.carousel.min.css">
-  <link rel="stylesheet" href="css/owl.theme.default.min.css">
-  <link rel="stylesheet" href="css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/owl.theme.default.min.css') }}">
 
-  <link rel="stylesheet" href="css/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="{{ asset('css/jquery.fancybox.min.css') }}">
 
-  <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+  <link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.css') }}">
 
-  <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+  <link rel="stylesheet" href="{{ asset('fonts/flaticon/font/flaticon.css') }}">
 
-  <link rel="stylesheet" href="css/aos.css">
-  <link href="css/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="{{ asset('css/aos.css') }}">
+  <link href="{{ asset('css/jquery.mb.YTPlayer.min.css') }}" media="all" rel="stylesheet" type="text/css">
 
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
 
 
@@ -39,7 +38,7 @@
 
     
     <div class="hero-slide owl-carousel site-blocks-cover">
-      <div class="intro-section" style="background-image: url('images/hero_1.jpg');">
+      <div class="intro-section" style="background-image: url('{{ asset('images/hero_1.jpg') }}');">
         <div class="container">
           <div class="row align-items-center">
             <div class="col-lg-12 mx-auto text-center" data-aos="fade-up">
@@ -50,7 +49,7 @@
         </div>
       </div>
 
-      <div class="intro-section" style="background-image: url('images/hero_1.jpg');">
+      <div class="intro-section" style="background-image: url('{{ asset('images/hero_1.jpg') }}');">
         <div class="container">
           <div class="row align-items-center">
             <div class="col-lg-12 mx-auto text-center" data-aos="fade-up">
@@ -135,7 +134,7 @@
               <div class="owl-slide-3 owl-carousel">
                   <div class="course-1-item">
                     <figure class="thumnail">
-                      <a href="course-single.html"><img src="images/course_1.jpg" alt="Image" class="img-fluid"></a>
+                      <a href="course-single.html"><img src="{{ asset('images/course_1.jpg') }}" alt="Image" class="img-fluid"></a>
                       <div class="price">$99.00</div>
                       <div class="category"><h3>Mobile Application</h3></div>  
                     </figure>
@@ -155,7 +154,7 @@
       
                   <div class="course-1-item">
                     <figure class="thumnail">
-                      <a href="course-single.html"><img src="images/course_2.jpg" alt="Image" class="img-fluid"></a>
+                      <a href="course-single.html"><img src="{{ asset('images/course_2.jpg') }}" alt="Image" class="img-fluid"></a>
                       <div class="price">$99.00</div>
                       <div class="category"><h3>Web Design</h3></div>  
                     </figure>
@@ -175,7 +174,7 @@
       
                   <div class="course-1-item">
                     <figure class="thumnail">
-                      <a href="course-single.html"><img src="images/course_3.jpg" alt="Image" class="img-fluid"></a>
+                      <a href="course-single.html"><img src="{{ asset('images/course_3.jpg') }}" alt="Image" class="img-fluid"></a>
                       <div class="price">$99.00</div>
                       <div class="category"><h3>Arithmetic</h3></div>  
                     </figure>
@@ -195,7 +194,7 @@
 
                   <div class="course-1-item">
                     <figure class="thumnail">
-                        <a href="course-single.html"><img src="images/course_4.jpg" alt="Image" class="img-fluid"></a>
+                        <a href="course-single.html"><img src="{{ asset('images/course_4.jpg') }}" alt="Image" class="img-fluid"></a>
                       <div class="price">$99.00</div>
                       <div class="category"><h3>Mobile Application</h3></div>  
                     </figure>
@@ -215,7 +214,7 @@
       
                   <div class="course-1-item">
                     <figure class="thumnail">
-                        <a href="course-single.html"><img src="images/course_5.jpg" alt="Image" class="img-fluid"></a>
+                        <a href="course-single.html"><img src="{{ asset('images/course_5.jpg') }}" alt="Image" class="img-fluid"></a>
                       <div class="price">$99.00</div>
                       <div class="category"><h3>Web Design</h3></div>  
                     </figure>
@@ -235,7 +234,7 @@
       
                   <div class="course-1-item">
                     <figure class="thumnail">
-                        <a href="course-single.html"><img src="images/course_6.jpg" alt="Image" class="img-fluid"></a>
+                        <a href="course-single.html"><img src="{{ asset('images/course_6.jpg') }}" alt="Image" class="img-fluid"></a>
                       <div class="price">$99.00</div>
                       <div class="category"><h3>Mobile Application</h3></div>  
                     </figure>
@@ -266,7 +265,7 @@
     
 
 
-    <div class="section-bg style-1" style="background-image: url('images/about_1.jpg');">
+    <div class="section-bg style-1" style="background-image: url('{{ asset('images/about_1.jpg') }}');">
       <div class="container">
         <div class="row">
           <div class="col-lg-4">
@@ -299,7 +298,7 @@
 
           <div class="ftco-testimonial-1">
             <div class="ftco-testimonial-vcard d-flex align-items-center mb-4">
-              <img src="images/person_1.jpg" alt="Image" class="img-fluid mr-3">
+              <img src="{{ asset('images/person_1.jpg') }}" alt="Image" class="img-fluid mr-3">
               <div>
                 <h3>Allison Holmes</h3>
                 <span>Designer</span>
@@ -312,7 +311,7 @@
 
           <div class="ftco-testimonial-1">
             <div class="ftco-testimonial-vcard d-flex align-items-center mb-4">
-              <img src="images/person_2.jpg" alt="Image" class="img-fluid mr-3">
+              <img src="{{ asset('images/person_2.jpg') }}" alt="Image" class="img-fluid mr-3">
               <div>
                 <h3>Allison Holmes</h3>
                 <span>Designer</span>
@@ -325,7 +324,7 @@
 
           <div class="ftco-testimonial-1">
             <div class="ftco-testimonial-vcard d-flex align-items-center mb-4">
-              <img src="images/person_4.jpg" alt="Image" class="img-fluid mr-3">
+              <img src="{{ asset('images/person_4.jpg') }}" alt="Image" class="img-fluid mr-3">
               <div>
                 <h3>Allison Holmes</h3>
                 <span>Designer</span>
@@ -338,7 +337,7 @@
 
           <div class="ftco-testimonial-1">
             <div class="ftco-testimonial-vcard d-flex align-items-center mb-4">
-              <img src="images/person_3.jpg" alt="Image" class="img-fluid mr-3">
+              <img src="{{ asset('images/person_3.jpg') }}" alt="Image" class="img-fluid mr-3">
               <div>
                 <h3>Allison Holmes</h3>
                 <span>Designer</span>
@@ -351,7 +350,7 @@
 
           <div class="ftco-testimonial-1">
             <div class="ftco-testimonial-vcard d-flex align-items-center mb-4">
-              <img src="images/person_2.jpg" alt="Image" class="img-fluid mr-3">
+              <img src="{{ asset('images/person_2.jpg') }}" alt="Image" class="img-fluid mr-3">
               <div>
                 <h3>Allison Holmes</h3>
                 <span>Designer</span>
@@ -364,7 +363,7 @@
 
           <div class="ftco-testimonial-1">
             <div class="ftco-testimonial-vcard d-flex align-items-center mb-4">
-              <img src="images/person_4.jpg" alt="Image" class="img-fluid mr-3">
+              <img src="{{ asset('images/person_4.jpg') }}" alt="Image" class="img-fluid mr-3">
               <div>
                 <h3>Allison Holmes</h3>
                 <span>Designer</span>
@@ -381,7 +380,7 @@
     </div>
     
 
-    <div class="section-bg style-1" style="background-image: url('images/hero_1.jpg');">
+    <div class="section-bg style-1" style="background-image: url('{{ asset('images/hero_1.jpg') }}');">
       <div class="container">
         <div class="row">
           <div class="col-lg-4 col-md-6 mb-5 mb-lg-0">
@@ -417,7 +416,7 @@
             <div class="row">
               <div class="col-lg-6">
                 <div class="post-entry-big">
-                  <a href="news-single.html" class="img-link"><img src="images/blog_large_1.jpg" alt="Image" class="img-fluid"></a>
+                  <a href="news-single.html" class="img-link"><img src="{{ asset('images/blog_large_1.jpg') }}" alt="Image" class="img-fluid"></a>
                   <div class="post-content">
                     <div class="post-meta"> 
                       <a href="#">June 6, 2019</a>
@@ -430,7 +429,7 @@
               </div>
               <div class="col-lg-6">
                 <div class="post-entry-big horizontal d-flex mb-4">
-                  <a href="news-single.html" class="img-link mr-4"><img src="images/blog_1.jpg" alt="Image" class="img-fluid"></a>
+                  <a href="news-single.html" class="img-link mr-4"><img src="{{ asset('images/blog_1.jpg') }}" alt="Image" class="img-fluid"></a>
                   <div class="post-content">
                     <div class="post-meta">
                       <a href="#">June 6, 2019</a>
@@ -442,7 +441,7 @@
                 </div>
 
                 <div class="post-entry-big horizontal d-flex mb-4">
-                  <a href="news-single.html" class="img-link mr-4"><img src="images/blog_2.jpg" alt="Image" class="img-fluid"></a>
+                  <a href="news-single.html" class="img-link mr-4"><img src="{{ asset('images/blog_2.jpg') }}" alt="Image" class="img-fluid"></a>
                   <div class="post-content">
                     <div class="post-meta">
                       <a href="#">June 6, 2019</a>
@@ -454,7 +453,7 @@
                 </div>
 
                 <div class="post-entry-big horizontal d-flex mb-4">
-                  <a href="news-single.html" class="img-link mr-4"><img src="images/blog_1.jpg" alt="Image" class="img-fluid"></a>
+                  <a href="news-single.html" class="img-link mr-4"><img src="{{ asset('images/blog_1.jpg') }}" alt="Image" class="img-fluid"></a>
                   <div class="post-content">
                     <div class="post-meta">
                       <a href="#">June 6, 2019</a>
@@ -476,20 +475,20 @@
               <span class="play">
                 <span class="icon-play"></span>
               </span>
-              <img src="images/course_5.jpg" alt="Image" class="img-fluid">
+              <img src="{{ asset('images/course_5.jpg') }}" alt="Image" class="img-fluid">
             </a>
             <a href="https://vimeo.com/45830194" class="video-1 mb-4" data-fancybox="" data-ratio="2"> -->
                 <!-- <span class="play">
                   <span class="icon-play"></span>
                 </span> -->
-                <!-- <img src="images/course_5.jpg" alt="Image" class="img-fluid">
+                <!-- <img src="{{ asset('images/course_5.jpg') }}" alt="Image" class="img-fluid">
               </a> -->
           </div>
         </div>
       </div>
     </div>
 
-    <div class="site-section ftco-subscribe-1" style="background-image: url('images/bg_1.jpg')">
+    <div class="site-section ftco-subscribe-1" style="background-image: url('{{ asset('images/bg_1.jpg') }}')">
       <div class="container">
         <!-- <div class="row align-items-center">
           <div class="col-lg-7">
@@ -511,7 +510,7 @@
       <div class="container">
         <div class="row">
           <!-- <div class="col-lg-3">
-            <p class="mb-4"><img src="images/logo.png" alt="Image" class="img-fluid"></p>
+            <p class="mb-4"><img src="{{ asset('images/logo.png') }}" alt="Image" class="img-fluid"></p>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae nemo minima qui dolor, iusto iure.</p>  
             <p><a href="#">Learn More</a></p>
           </div> -->
@@ -571,25 +570,25 @@
   <!-- loader -->
   <div id="loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#51be78"/></svg></div>
 
-  <script src="js/jquery-3.3.1.min.js"></script>
-  <script src="js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="js/jquery-ui.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.stellar.min.js"></script>
-  <script src="js/jquery.countdown.min.js"></script>
-  <script src="js/bootstrap-datepicker.min.js"></script>
-  <script src="js/jquery.easing.1.3.js"></script>
-  <script src="js/aos.js"></script>
-  <script src="js/jquery.fancybox.min.js"></script>
-  <script src="js/jquery.sticky.js"></script>
-  <script src="js/jquery.mb.YTPlayer.min.js"></script>
+  <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+  <script src="{{ asset('js/jquery-migrate-3.0.1.min.js') }}"></script>
+  <script src="{{ asset('js/jquery-ui.js') }}"></script>
+  <script src="{{ asset('js/popper.min.js') }}"></script>
+  <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+  <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+  <script src="{{ asset('js/jquery.stellar.min.js') }}"></script>
+  <script src="{{ asset('js/jquery.countdown.min.js') }}"></script>
+  <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
+  <script src="{{ asset('js/jquery.easing.1.3.js') }}"></script>
+  <script src="{{ asset('js/aos.js') }}"></script>
+  <script src="{{ asset('js/jquery.fancybox.min.js') }}"></script>
+  <script src="{{ asset('js/jquery.sticky.js') }}"></script>
+  <script src="{{ asset('js/jquery.mb.YTPlayer.min.js') }}"></script>
 
 
 
 
-  <script src="js/main.js"></script>
+  <script src="{{ asset('js/main.js') }}"></script>
 
 </body>
 

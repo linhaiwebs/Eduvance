@@ -56,7 +56,7 @@
 
 
   <link href="https://fonts.googleapis.com/css?family=Muli:300,400,700,900" rel="stylesheet">
-  <link rel="stylesheet" href="fonts/icomoon/style.css">
+  <link rel="stylesheet" href="{{ asset('fonts/icomoon/style.css') }}">
 
   <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
   <link rel="stylesheet" href="{{asset('css/jquery-ui.css')}}">
@@ -404,7 +404,7 @@
       </div>
     </div>
 
-    <div class="section-bg style-1" style="background-image: url('images/hero_1.jpg');">
+    <div class="section-bg style-1" style="background-image: url('{{ asset('images/hero_1.jpg') }}');">
       <div class="container">
         <div class="row">
           <div class="col-lg-4 col-md-6 mb-5 mb-lg-0">
@@ -433,7 +433,7 @@
       <div class="container">
         <div class="row">
           <!-- <div class="col-lg-3">
-            <p class="mb-4"><img src="images/logo.png" alt="Image" class="img-fluid"></p>
+            <p class="mb-4"><img src="{{ asset('images/logo.png') }}" alt="Image" class="img-fluid"></p>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae nemo minima qui dolor, iusto iure.</p>  
             <p><a href="#">Learn More</a></p>
           </div> -->
