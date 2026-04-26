@@ -49,7 +49,7 @@ services:
       - ./docker/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini
       - ./docker/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
     env_file:
-      - .env
+      - .env.docker
     depends_on:
       mysql:
         condition: service_healthy

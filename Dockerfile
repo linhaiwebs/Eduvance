@@ -63,8 +63,13 @@ COPY docker/nginx/default.conf /etc/nginx/sites-available/default
 # Copy supervisor configuration
 COPY docker/supervisor/laravel.conf /etc/supervisor/conf.d/laravel.conf
 
+# Copy entrypoint script
+COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
 # Expose port 80
 EXPOSE 80
 
-# Start supervisor to manage nginx and php-fpm
+# Entrypoint ensures .env.docker overwrites .env before starting
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/laravel.conf"]
