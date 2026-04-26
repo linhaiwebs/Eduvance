@@ -18,15 +18,10 @@ if [ ! -f "$WORKDIR/.env" ] && [ -f "$WORKDIR/.env.example" ]; then
     echo "[entrypoint] ✓ Copied .env.example → .env"
 fi
 
-# Source the .env file so we have DB_HOST etc. as shell variables
-# (these also come from env_file in docker-compose, but source for safety)
+# Fix Windows CRLF line endings in .env (causes hidden \r in values)
 if [ -f "$WORKDIR/.env" ]; then
-    # Export only DB_ and REDIS_ vars from .env
-    while IFS='=' read -r key value; do
-        case "$key" in
-            DB_*|REDIS_*|APP_*) export "$key=$value" ;;
-        esac
-    done < "$WORKDIR/.env"
+    sed -i 's/\r$//' "$WORKDIR/.env"
+    echo "[entrypoint] ✓ Stripped CRLF from .env"
 fi
 
 # Generate APP_KEY if missing
@@ -50,19 +45,20 @@ mkdir -p "$WORKDIR/bootstrap/cache"
 chown -R www-data:www-data "$WORKDIR/storage" "$WORKDIR/bootstrap/cache" 2>/dev/null || true
 chmod -R 755 "$WORKDIR/storage" "$WORKDIR/bootstrap/cache" 2>/dev/null || true
 
-# Wait for MySQL to be ready
-echo "[entrypoint] Waiting for MySQL at ${DB_HOST}:${DB_PORT}..."
+# Wait for MySQL to be ready using mysqladmin (more reliable than PHP PDO)
+DB_HOST_VALUE=$(grep "^DB_HOST=" "$WORKDIR/.env" | cut -d'=' -f2)
+DB_PORT_VALUE=$(grep "^DB_PORT=" "$WORKDIR/.env" | cut -d'=' -f2)
+DB_DATABASE_VALUE=$(grep "^DB_DATABASE=" "$WORKDIR/.env" | cut -d'=' -f2)
+DB_USERNAME_VALUE=$(grep "^DB_USERNAME=" "$WORKDIR/.env" | cut -d'=' -f2)
+DB_PASSWORD_VALUE=$(grep "^DB_PASSWORD=" "$WORKDIR/.env" | cut -d'=' -f2)
+
+echo "[entrypoint] DB config: host=${DB_HOST_VALUE} port=${DB_PORT_VALUE} db=${DB_DATABASE_VALUE} user=${DB_USERNAME_VALUE}"
+
+echo "[entrypoint] Waiting for MySQL at ${DB_HOST_VALUE}:${DB_PORT_VALUE}..."
 MAX_RETRIES=30
 RETRY=0
 while [ $RETRY -lt $MAX_RETRIES ]; do
-    if php -r "
-        try {
-            new PDO('mysql:host=\${DB_HOST};port=\${DB_PORT};dbname=\${DB_DATABASE}', '\${DB_USERNAME}', '\${DB_PASSWORD}');
-            exit(0);
-        } catch (Exception \$e) {
-            exit(1);
-        }
-    " 2>/dev/null; then
+    if mysqladmin ping -h "$DB_HOST_VALUE" -P "$DB_PORT_VALUE" -u "$DB_USERNAME_VALUE" -p"$DB_PASSWORD_VALUE" 2>/dev/null; then
         echo "[entrypoint] ✓ MySQL is ready"
         break
     fi
