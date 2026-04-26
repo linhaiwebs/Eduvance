@@ -63,9 +63,10 @@ COPY docker/nginx/default.conf /etc/nginx/sites-available/default
 # Copy supervisor configuration
 COPY docker/supervisor/laravel.conf /etc/supervisor/conf.d/laravel.conf
 
-# Copy entrypoint script
+# Copy entrypoint script (fix Windows CRLF line endings)
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
+RUN sed -i 's/\r$//' /usr/local/bin/entrypoint.sh \
+    && chmod +x /usr/local/bin/entrypoint.sh
 
 # Expose port 80
 EXPOSE 80
