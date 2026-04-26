@@ -24,11 +24,18 @@ if [ -f "$WORKDIR/.env" ]; then
     echo "[entrypoint] ✓ Stripped CRLF from .env"
 fi
 
-# Generate APP_KEY if missing
-if [ -f "$WORKDIR/.env" ] && grep -q "^APP_KEY=$" "$WORKDIR/.env" 2>/dev/null; then
+# Generate APP_KEY if missing or empty
+APP_KEY_CURRENT=$(grep "^APP_KEY=" "$WORKDIR/.env" | cut -d'=' -f2-)
+if [ -z "$APP_KEY_CURRENT" ]; then
     echo "[entrypoint] Generating APP_KEY..."
     php "$WORKDIR/artisan" key:generate --force
-    echo "[entrypoint] ✓ APP_KEY generated"
+    # Verify it was set
+    APP_KEY_VERIFY=$(grep "^APP_KEY=" "$WORKDIR/.env" | cut -d'=' -f2-)
+    if [ -z "$APP_KEY_VERIFY" ]; then
+        echo "[entrypoint] ⚠ Key generation may have failed, trying again..."
+        php "$WORKDIR/artisan" key:generate --force
+    fi
+    echo "[entrypoint] ✓ APP_KEY generated: $(grep "^APP_KEY=" "$WORKDIR/.env" | head -c 30)..."
 fi
 
 # Create required directories
@@ -81,6 +88,12 @@ else
     # Create storage link
     php "$WORKDIR/artisan" storage:link 2>/dev/null || true
 fi
+
+# Clear all Laravel caches to ensure fresh config
+php "$WORKDIR/artisan" config:clear 2>/dev/null || true
+php "$WORKDIR/artisan" cache:clear 2>/dev/null || true
+php "$WORKDIR/artisan" view:clear 2>/dev/null || true
+echo "[entrypoint] ✓ Laravel caches cleared"
 
 echo "[entrypoint] Starting PHP-FPM..."
 exec "$@"
