@@ -1,9 +1,6 @@
 #!/bin/sh
-set -e
-
 # ===== Docker Entrypoint for Eduvance =====
-# Fixes the issue where .env (gitignored) has local dev values
-# that override Docker environment variables in Laravel.
+# Copies .env.docker → .env, waits for MySQL, runs migrations, then starts PHP-FPM.
 
 WORKDIR="/var/www/html"
 
@@ -21,8 +18,19 @@ if [ ! -f "$WORKDIR/.env" ] && [ -f "$WORKDIR/.env.example" ]; then
     echo "[entrypoint] ✓ Copied .env.example → .env"
 fi
 
+# Source the .env file so we have DB_HOST etc. as shell variables
+# (these also come from env_file in docker-compose, but source for safety)
+if [ -f "$WORKDIR/.env" ]; then
+    # Export only DB_ and REDIS_ vars from .env
+    while IFS='=' read -r key value; do
+        case "$key" in
+            DB_*|REDIS_*|APP_*) export "$key=$value" ;;
+        esac
+    done < "$WORKDIR/.env"
+fi
+
 # Generate APP_KEY if missing
-if grep -q "APP_KEY=$" "$WORKDIR/.env" 2>/dev/null || grep -q "APP_KEY=\s*$" "$WORKDIR/.env" 2>/dev/null; then
+if [ -f "$WORKDIR/.env" ] && grep -q "^APP_KEY=$" "$WORKDIR/.env" 2>/dev/null; then
     echo "[entrypoint] Generating APP_KEY..."
     php "$WORKDIR/artisan" key:generate --force
     echo "[entrypoint] ✓ APP_KEY generated"
@@ -43,30 +51,39 @@ chown -R www-data:www-data "$WORKDIR/storage" "$WORKDIR/bootstrap/cache" 2>/dev/
 chmod -R 755 "$WORKDIR/storage" "$WORKDIR/bootstrap/cache" 2>/dev/null || true
 
 # Wait for MySQL to be ready
-echo "[entrypoint] Waiting for MySQL..."
+echo "[entrypoint] Waiting for MySQL at ${DB_HOST}:${DB_PORT}..."
 MAX_RETRIES=30
 RETRY=0
-until php -r "new PDO('mysql:host='.'$DB_HOST'.';port='.'$DB_PORT'.';dbname='.'$DB_DATABASE', '$DB_USERNAME', '$DB_PASSWORD');" 2>/dev/null || [ $RETRY -eq $MAX_RETRIES ]; do
+while [ $RETRY -lt $MAX_RETRIES ]; do
+    if php -r "
+        try {
+            new PDO('mysql:host=\${DB_HOST};port=\${DB_PORT};dbname=\${DB_DATABASE}', '\${DB_USERNAME}', '\${DB_PASSWORD}');
+            exit(0);
+        } catch (Exception \$e) {
+            exit(1);
+        }
+    " 2>/dev/null; then
+        echo "[entrypoint] ✓ MySQL is ready"
+        break
+    fi
     RETRY=$((RETRY+1))
     echo "[entrypoint]   MySQL not ready, retry $RETRY/$MAX_RETRIES..."
     sleep 2
 done
 
 if [ $RETRY -eq $MAX_RETRIES ]; then
-    echo "[entrypoint] ⚠ MySQL connection failed after $MAX_RETRIES retries"
+    echo "[entrypoint] ⚠ MySQL connection failed after $MAX_RETRIES retries, starting anyway..."
 else
-    echo "[entrypoint] ✓ MySQL is ready"
+    # Run migrations
+    echo "[entrypoint] Running migrations..."
+    php "$WORKDIR/artisan" migrate --force 2>&1 || echo "[entrypoint] ⚠ Migration had errors (may already be migrated)"
 
-    # Run migrations if migrations table doesn't exist
-    if ! php "$WORKDIR/artisan" migrate:status > /dev/null 2>&1; then
-        echo "[entrypoint] Running migrations..."
-        php "$WORKDIR/artisan" migrate --force
-        echo "[entrypoint] ✓ Migrations complete"
+    # Run seeders
+    echo "[entrypoint] Running seeders..."
+    php "$WORKDIR/artisan" db:seed --force 2>&1 || echo "[entrypoint] ⚠ Seeder had errors (may already be seeded)"
 
-        echo "[entrypoint] Running seeders..."
-        php "$WORKDIR/artisan" db:seed --force
-        echo "[entrypoint] ✓ Seeders complete"
-    fi
+    # Create storage link
+    php "$WORKDIR/artisan" storage:link 2>/dev/null || true
 fi
 
 echo "[entrypoint] Starting PHP-FPM..."
