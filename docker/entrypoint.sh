@@ -24,18 +24,14 @@ if [ -f "$WORKDIR/.env" ]; then
     echo "[entrypoint] ✓ Stripped CRLF from .env"
 fi
 
-# Generate APP_KEY if missing or empty
-APP_KEY_CURRENT=$(grep "^APP_KEY=" "$WORKDIR/.env" | cut -d'=' -f2-)
-if [ -z "$APP_KEY_CURRENT" ]; then
+# Generate APP_KEY if missing
+# Important: APP_KEY is NOT in .env.docker, so Docker env_file won't set it.
+# The entrypoint generates it and appends to .env file directly.
+if ! grep -q "^APP_KEY=base64:" "$WORKDIR/.env" 2>/dev/null; then
     echo "[entrypoint] Generating APP_KEY..."
-    php "$WORKDIR/artisan" key:generate --force
-    # Verify it was set
-    APP_KEY_VERIFY=$(grep "^APP_KEY=" "$WORKDIR/.env" | cut -d'=' -f2-)
-    if [ -z "$APP_KEY_VERIFY" ]; then
-        echo "[entrypoint] ⚠ Key generation may have failed, trying again..."
-        php "$WORKDIR/artisan" key:generate --force
-    fi
-    echo "[entrypoint] ✓ APP_KEY generated: $(grep "^APP_KEY=" "$WORKDIR/.env" | head -c 30)..."
+    GENERATED_KEY=$(php -r "echo 'base64:' . base64_encode(random_bytes(32));")
+    echo "APP_KEY=${GENERATED_KEY}" >> "$WORKDIR/.env"
+    echo "[entrypoint] ✓ APP_KEY set"
 fi
 
 # Create required directories
