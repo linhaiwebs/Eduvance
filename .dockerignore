@@ -1,0 +1,42 @@
+# ===== Dependencies (installed inside container) =====
+/vendor
+/node_modules
+
+# ===== Git =====
+.git
+.gitignore
+
+# ===== Docker files (don't copy into image) =====
+docker-compose.yml
+docker-compose.standalone.yml
+Dockerfile
+Dockerfile.fpm
+
+# ===== Broken symlinks (cause Docker build failure) =====
+public/storage
+public/hot
+
+# ===== IDE / OS files =====
+.idea
+.vscode
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ===== Environment files (mounted via docker-compose) =====
+.env
+.env.*
+!.env.example
+
+# ===== Logs =====
+*.log
+storage/logs/*
+
+# ===== Large binary/cache directories =====
+.phpunit.result.cache
+bootstrap/cache/*
+!bootstrap/cache/.gitignore
+
+# ===== MySQL data =====
+docker/mysql/data
